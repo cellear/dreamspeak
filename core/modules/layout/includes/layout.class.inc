@@ -754,15 +754,6 @@ class Layout {
         }
       }
     }
-    if (!empty($this->orphaned_blocks)) {
-      // Assign orphan blocks to the default or last region,
-      // if the former doesn't exist.
-      end($new_positions);
-      $this->refuge_region = isset($new_layout_info['default region']) ? $new_layout_info['default region'] : key($new_positions);
-      foreach ($this->orphaned_blocks as $uuid) {
-        $new_positions[$this->refuge_region][] = $uuid;
-      }
-    }
 
     // Assign orphan blocks to the default or last region, if the former doesn't
     // exist.
@@ -807,7 +798,8 @@ class Layout {
       if (!isset($context->position) && !is_object($context->data)) {
         $context_info = layout_get_context_info($context->plugin);
         if (isset($context_info['load callback'])) {
-          $context_data = call_user_func_array($context_info['load callback'], $context->settings);
+          $load_arguments = array_values($context->settings);
+          $context_data = call_user_func_array($context_info['load callback'], $load_arguments);
           $context->setData($context_data);
         }
       }
