@@ -1,0 +1,4 @@
+name: dreamspeak-backdrop-2022
+recipe: backdrop
+config:
+  webroot: .
